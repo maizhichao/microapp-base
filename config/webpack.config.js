@@ -151,6 +151,19 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
+  const externals = [
+    /^@microapp\/(\w|\/)*$/,
+    /^antd$/,
+    /^axios$/,
+    /^lodash$/,
+    /^moment$/,
+    /^react$/,
+    /^react-dom$/,
+    /^react-dom\/server$/,
+    /^react-router$/,
+    /^react\/lib.*/
+  ];
+
   return {
     mode: isEnvProduction ? "production" : isEnvDevelopment && "development",
     // Stop compilation early in production
@@ -562,6 +575,7 @@ module.exports = function (webpackEnv) {
         }
       ]
     },
+    externals: externals,
     plugins: [
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(

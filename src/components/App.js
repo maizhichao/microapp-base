@@ -5,20 +5,17 @@ import { Router } from "react-router-dom";
 import { history } from "@/router";
 import AppHeader from "./Header";
 import Main from "@/components/Main";
-import AppConfigurator from "./AppConfigurator";
 import { Layout } from "antd";
 
 const App = () => {
   return (
     <Provider store={store}>
-      <AppConfigurator>
-        <Router history={history}>
-          <Layout className="se-app">
-            <AppHeader />
-            <Main />
-          </Layout>
-        </Router>
-      </AppConfigurator>
+      <Router history={history}>
+        <Layout className="se-app">
+          <AppHeader />
+          <Main />
+        </Layout>
+      </Router>
     </Provider>
   );
 };

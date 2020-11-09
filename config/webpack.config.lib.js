@@ -5,18 +5,27 @@ const fs = require("fs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const isEnvProduction = process.env.NODE_ENV === "production";
 
-if (!fs.existsSync(paths.appBuild)) {
-  fs.mkdirSync(paths.appBuild);
-}
+function makeWebpackLibConfig() {
+  if (!fs.existsSync(paths.appBuild)) {
+    fs.mkdirSync(paths.appBuild);
+  }
 
-function getConfig() {
   const entry = {
     antd: path.resolve(paths.appNodeModules, "antd"),
+    "react-router": path.resolve(paths.appNodeModules, "react-router"),
+    "react-dom-server": path.resolve(paths.appNodeModules, "react-dom/server"),
     axios: path.resolve(paths.libPath, "axios.js"),
     lodash: path.resolve(paths.libPath, "lodash.js"),
-    moment: path.resolve(paths.libPath, "moment.js"),
-    "react-router": path.resolve(paths.appNodeModules, "react-router")
+    moment: path.resolve(paths.libPath, "moment.js")
   };
+
+  const externals = [
+    /^react$/,
+    /^react-dom$/,
+    /^react-dom\/server$/,
+    /^react-router$/,
+    /^react\/lib.*/
+  ];
 
   const output = {
     path: path.resolve(paths.appBuild, "library"),
@@ -67,8 +76,9 @@ function getConfig() {
     resolve: {
       extensions: [".js", ".ts", ".tsx", ".json", ".jsx"]
     },
+    externals: externals,
     plugins: plugins
   };
 }
 
-module.exports = getConfig();
+module.exports = makeWebpackLibConfig();
