@@ -2,7 +2,7 @@ const initialState = {
   spinning: false
 };
 
-export function mainReducer(state = initialState, action) {
+export default function mainReducer(state = initialState, action) {
   switch (action.type) {
     case "INITIALIZE_APP":
       return state;
