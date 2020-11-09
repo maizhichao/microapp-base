@@ -1,0 +1,14 @@
+import { setPublicPath } from "systemjs-webpack-interop";
+setPublicPath("@base");
+
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.less";
+import App from "@/components/App";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
+);
