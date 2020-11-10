@@ -21,13 +21,7 @@ function makeWebpackLibConfig(localUrlForBrowser) {
     moment: path.resolve(paths.libPath, "moment.js")
   };
 
-  const externals = [
-    /^react$/,
-    /^react-dom$/,
-    /^react-dom\/server$/,
-    /^react-router$/,
-    /^react\/lib.*/
-  ];
+  const externals = [/^react$/, /^react-dom$/];
 
   const output = {
     path: path.resolve(paths.appBuild, "library"),
