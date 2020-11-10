@@ -1,8 +1,9 @@
 {
   "name": "microapp-base",
   "version": "0.1.0",
-  "private": true,
   "license": "MIT",
+  "repository": "https://github.com/maizhichao/microapp-base",
+  "author": "zhichao.mai",
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "@babel/core": "7.12.3",

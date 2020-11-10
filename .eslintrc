@@ -22,10 +22,6 @@
   },
   "rules": {
     "no-unused-vars": 0,
-    "react/prop-types": 0,
-    "react/no-direct-mutation-state": 0,
-    "no-case-declarations": 0,
-    "no-extra-boolean-cast": 0,
-    "no-useless-escape": 0
+    "react/prop-types": 0
   }
 }
