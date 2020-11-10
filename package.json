@@ -2,6 +2,7 @@
   "name": "microapp-base",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "@babel/core": "7.12.3",

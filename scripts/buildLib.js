@@ -12,7 +12,7 @@ const path = require("path");
 const chalk = require("react-dev-utils/chalk");
 const fs = require("fs-extra");
 const webpack = require("webpack");
-const config = require("../config/webpack.config.lib");
+const makeWebpackLibConfig = require("../config/webpack.config.lib");
 const paths = require("../config/paths");
 const formatWebpackMessages = require("react-dev-utils/formatWebpackMessages");
 const FileSizeReporter = require("react-dev-utils/FileSizeReporter");
@@ -28,7 +28,7 @@ const libBuildFolder = path.resolve(paths.appBuild, "library");
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require("react-dev-utils/browsersHelper");
-function buildLib() {
+function buildLib(localUrlForBrowser) {
   return checkBrowsers(paths.appPath, isInteractive)
     .then(() => {
       // First, read the current file sizes in build directory.
@@ -40,7 +40,7 @@ function buildLib() {
       // if you're in it, you don't end up in Trash
       fs.emptyDirSync(paths.appBuild);
       // Start the webpack build
-      return build(previousFileSizes);
+      return build(previousFileSizes, localUrlForBrowser);
     })
     .then(
       ({ warnings }) => {
@@ -86,10 +86,10 @@ function buildLib() {
 }
 
 // Create the production build and print the deployment instructions.
-function build(previousFileSizes) {
+function build(previousFileSizes, localUrlForBrowser) {
   console.log("Creating share libraries...");
 
-  const compiler = webpack(config);
+  const compiler = webpack(makeWebpackLibConfig(localUrlForBrowser));
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       let messages;

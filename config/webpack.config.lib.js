@@ -3,9 +3,11 @@ const paths = require("./paths");
 const webpack = require("webpack");
 const fs = require("fs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ImportmapWebpackPlugin = require("./webpack-plugins/importmap-webpack-plugin");
+
 const isEnvProduction = process.env.NODE_ENV === "production";
 
-function makeWebpackLibConfig() {
+function makeWebpackLibConfig(localUrlForBrowser) {
   if (!fs.existsSync(paths.appBuild)) {
     fs.mkdirSync(paths.appBuild);
   }
@@ -15,7 +17,7 @@ function makeWebpackLibConfig() {
     "react-router": path.resolve(paths.appNodeModules, "react-router"),
     "react-dom-server": path.resolve(paths.appNodeModules, "react-dom/server"),
     axios: path.resolve(paths.libPath, "axios.js"),
-    lodash: path.resolve(paths.libPath, "lodash.js"),
+    lodash: path.resolve(paths.appNodeModules, "lodash"),
     moment: path.resolve(paths.libPath, "moment.js")
   };
 
@@ -37,6 +39,13 @@ function makeWebpackLibConfig() {
   const reactBundle = !isEnvProduction ? "development" : "production.min";
 
   const plugins = [
+    new ImportmapWebpackPlugin({
+      from: path.resolve(paths.libPath),
+      filename: "importmap.json",
+      replacements: {
+        PUBLIC_URL: localUrlForBrowser || "%PUBLIC_URL%"
+      }
+    }),
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -81,4 +90,4 @@ function makeWebpackLibConfig() {
   };
 }
 
-module.exports = makeWebpackLibConfig();
+module.exports = makeWebpackLibConfig;
